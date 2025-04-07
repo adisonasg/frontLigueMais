@@ -1,0 +1,10 @@
+<table *ngIf="results">
+    <tr>
+      <th>Com Plano</th>
+      <th>Sem Plano</th>
+    </tr>
+    <tr>
+      <td>{{ results.comPlano | currency }}</td>
+      <td>{{ results.semPlano | currency }}</td>
+    </tr>
+  </table>

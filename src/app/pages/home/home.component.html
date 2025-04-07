@@ -1,0 +1,60 @@
+<div class="container mt-5">
+  <div class="card shadow p-4">
+    <h2 class="mb-4 text-center">Calcular Tarifa</h2>
+
+    <form [formGroup]="tarifaForm" (ngSubmit)="calcularTarifa()">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="origem" class="form-label">Origem:</label>
+          <select id="origem" class="form-select" formControlName="origem">
+            <option value="">Selecione</option>
+            <option value="011">011</option>
+            <option value="016">016</option>
+            <option value="017">017</option>
+            <option value="018">018</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="destino" class="form-label">Destino:</label>
+          <select id="destino" class="form-select" formControlName="destino">
+            <option value="">Selecione</option>
+            <option value="011">011</option>
+            <option value="016">016</option>
+            <option value="017">017</option>
+            <option value="018">018</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="tempo" class="form-label">Tempo (min):</label>
+          <input id="tempo" type="number" class="form-control" formControlName="tempo" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="plano" class="form-label">Plano:</label>
+          <select id="plano" class="form-select" formControlName="plano">
+            <option value="">Selecione</option>
+            <option value="FaleMais 30">FaleMais 30</option>
+            <option value="FaleMais 60">FaleMais 60</option>
+            <option value="FaleMais 120">FaleMais 120</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-4 text-center">
+        <button type="submit" class="btn btn-primary px-5" [disabled]="tarifaForm.invalid">Calcular</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="mt-4">
+    <div class="card p-3" *ngIf="resultadoTarifa">
+      <h3 class="text-success">Resultado</h3>
+      <p><strong>Valor com Plano:</strong> {{ resultadoTarifa?.valorComPlano | currency:'BRL' }}</p>
+      <p><strong>Valor sem Plano:</strong> {{ resultadoTarifa?.valorSemPlano | currency:'BRL' }}</p>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
