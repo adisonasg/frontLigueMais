@@ -11,6 +11,9 @@ import { TarifaService } from '../../services/tarifa.service';
 export class HomeComponent implements OnInit {
   tarifaForm!: FormGroup;
   resultadoTarifa: { valorComPlano: number; valorSemPlano: number } | null = null;
+  isLoading = false;
+  erroMensagem: string | null = null;
+  sucesso = false;
 
   constructor(private fb: FormBuilder, private tarifaService: TarifaService) {}
 
@@ -25,6 +28,10 @@ export class HomeComponent implements OnInit {
 
   calcularTarifa() {
     if (this.tarifaForm.valid) {
+      this.isLoading = true;
+      this.erroMensagem = null;
+      this.sucesso = false;
+
       const dados = {
         origemId: this.getDDDId(this.tarifaForm.value.origem),
         destinoId: this.getDDDId(this.tarifaForm.value.destino),
@@ -37,11 +44,17 @@ export class HomeComponent implements OnInit {
           console.log('Dados enviados:', dados);
           console.log('Resposta da API:', res);
           this.resultadoTarifa = res;
+          this.isLoading = false;
+          this.sucesso = true;
         },
-        error: (err) => console.error('Erro ao calcular tarifa:', err)
+        error: (err) => {
+          this.isLoading = false;
+          this.erroMensagem = 'Erro ao calcular tarifa. Tente novamente mais tarde.';
+          console.error(err);
+        }
       });
     } else {
-      console.log('Formulário inválido!');
+      this.tarifaForm.markAllAsTouched();
     }
   }
 

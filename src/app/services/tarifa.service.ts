@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { LigacaoModel } from '../models/ligacao.model';
+import { CalcularTarifaModel } from '../models/calcular-tarifa.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,7 @@ export class TarifaService {
 
   constructor(private http: HttpClient) {}
 
-  calcularTarifa(dados: { planoId: number; origemId: number; destinoId: number; minutagemLigacao: number }): Observable<{ valorComPlano: number; valorSemPlano: number }> {
-    return this.http.post<{ valorComPlano: number; valorSemPlano: number }>(this.apiUrl, dados);
+  calcularTarifa(dados: LigacaoModel): Observable<CalcularTarifaModel> {
+    return this.http.post<CalcularTarifaModel>(this.apiUrl, dados);
   }
 }
